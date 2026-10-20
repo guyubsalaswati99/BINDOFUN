@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BindoFun 6 - Kalimat Langsung & Tidak Langsung</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pastelBlue: {
+                            100: '#E0F2FE',
+                            200: '#BAE6FD',
+                            300: '#7DD3FC',
+                            400: '#38BDF8',
+                            500: '#0284C7',
+                            dark: '#0369A1'
+                        },
+                        pastelYellow: {
+                            100: '#FEF9C3',
+                            200: '#FEF08A',
+                            300: '#FDE047',
+                            400: '#FACC15',
+                            500: '#EAB308',
+                            dark: '#CA8A04'
+                        },
+                        pastelMint: '#A7F3D0',
+                        pastelRose: '#FECDD3'
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        nunito: ['Nunito', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        '3d-blue': '0 6px 0 0 #0284C7',
+                        '3d-yellow': '0 6px 0 0 #CA8A04',
+                        '3d-green': '0 6px 0 0 #15803D',
+                        '3d-rose': '0 6px 0 0 #E11D48',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef9c3 100%);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: 'Fredoka', cursive;
+        }
+
+        .btn-3d {
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 0 transparent !important;
+        }
+
+        .floating-anim {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .zombie-walk {
+            animation: walk 0.8s steps(2) infinite;
+        }
+        @keyframes walk {
+            0% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+            100% { transform: rotate(-3deg); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7dd3fc;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+
+        .card-glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-slate-800">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 card-glass shadow-md px-4 py-3 border-b border-pastelBlue-200">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <!-- Logo & Brand -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-11 h-11 bg-pastelYellow-300 rounded-2xl flex items-center justify-center text-pastelBlue-dark shadow-md border-2 border-white transform hover:rotate-6 transition">
+                    <i class="fa-solid fa-[#fa-book-open] fa-book-open text-2xl text-pastelBlue-dark"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-pastelBlue-dark leading-none">BindoFun <span class="text-pastelYellow-dark">Kelas 6</span></h1>
+                    <p class="text-xs text-slate-600 font-medium">Kalimat Langsung & Tidak Langsung</p>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto py-1 max-w-full">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-3 py-2 rounded-xl text-sm font-bold flex items-center gap-2 bg-pastelBlue-400 text-white shadow-3d-blue btn-3d">
+                    <i class="fa-solid fa-house"></i> <span class="hidden sm:inline">Beranda</span>
+                </button>
+                <button onclick="switchTab('cp')" id="nav-cp" class="nav-btn px-3 py-2 rounded-xl text-sm font-bold flex items-center gap-2 bg-white text-slate-700 hover:bg-pastelBlue-100">
+                    <i class="fa-solid fa-bullseye text-pastelBlue-500"></i> <span class="hidden sm:inline">CP & TP</span>
+                </button>
+                <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-3 py-2 rounded-xl text-sm font-bold flex items-center gap-2 bg-white text-slate-700 hover:bg-pastelBlue-100">
+                    <i class="fa-solid fa-book-bookmark text-pastelBlue-500"></i> <span class="hidden sm:inline">Materi</span>
+                </button>
+                <button onclick="switchTab('latihan')" id="nav-latihan" class="nav-btn px-3 py-2 rounded-xl text-sm font-bold flex items-center gap-2 bg-white text-slate-700 hover:bg-pastelBlue-100">
+                    <i class="fa-solid fa-pen-to-square text-pastelYellow-dark"></i> <span class="hidden sm:inline">Latihan Soal</span>
+                </button>
+                <button onclick="switchTab('game')" id="nav-game" class="nav-btn px-3 py-2 rounded-xl text-sm font-bold flex items-center gap-2 bg-pastelYellow-400 text-slate-800 shadow-3d-yellow btn-3d">
+                    <i class="fa-solid fa-gamepad text-emerald-700"></i> Game Zombie
+                </button>
+            </nav>
+
+            <!-- Sound Toggle -->
+            <button id="sound-toggle-btn" onclick="toggleAudio()" class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-pastelYellow-100 transition">
+                <i class="fa-solid fa-volume-high text-pastelBlue-dark" id="sound-icon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 my-2">
+
+        <!-- ================= VIEW 1: HOME / CP & TP ================= -->
+        <section id="view-home" class="tab-view space-y-6">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-pastelBlue-200 via-sky-100 to-pastelYellow-200 p-6 md:p-10 shadow-lg border-2 border-white">
+                <div class="md:w-2/3 space-y-4 relative z-10">
+                    <span class="px-4 py-1.5 rounded-full bg-pastelYellow-300 text-slate-800 font-bold text-xs uppercase tracking-wider shadow-sm">
+                        ✨ Bahasa Indonesia • Kelas 6 SD
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-pastelBlue-dark leading-tight">
+                        Kuasai Dialog & Ubah <span class="text-pastelYellow-dark underline decoration-wavy decoration-pastelBlue-400">Kalimat</span> Dengan Mudah!
+                    </h1>
+                    <p class="text-slate-700 font-medium text-base md:text-lg">
+                        Selamat datang di media pembelajaran interaktif. Pelajari cara menggunakan kalimat langsung dan tidak langsung, lalu uji ketangkasanmu membasmi zombie dalam game edukasi!
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="switchTab('materi')" class="px-6 py-3 bg-pastelBlue-500 text-white font-bold rounded-2xl shadow-3d-blue btn-3d flex items-center gap-2 text-lg">
+                            <i class="fa-solid fa-rocket"></i> Mulai Belajar
+                        </button>
+                        <button onclick="switchTab('game')" class="px-6 py-3 bg-pastelYellow-400 text-slate-800 font-bold rounded-2xl shadow-3d-yellow btn-3d flex items-center gap-2 text-lg">
+                            <i class="fa-solid fa-shield-cat text-emerald-700"></i> Main Game Zombie
+                        </button>
+                    </div>
+                </div>
+                <!-- Cute Graphic Accent -->
+                <div class="hidden md:block absolute right-6 bottom-4 w-72 h-72 floating-anim">
+                    <div class="relative w-full h-full flex items-center justify-center">
+                        <div class="w-56 h-56 rounded-full bg-pastelYellow-200 absolute -bottom-4 -right-4 opacity-70"></div>
+                        <div class="w-48 h-48 rounded-3xl bg-pastelBlue-300/80 backdrop-blur border-4 border-white flex flex-col items-center justify-center p-4 text-center shadow-xl rotate-6">
+                            <span class="text-5xl mb-2">🗣️💬</span>
+                            <span class="font-bold text-pastelBlue-dark text-lg">"Ayo Belajar Bersama!"</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="card-glass rounded-3xl p-6 shadow-md border-2 border-pastelBlue-100 hover:border-pastelBlue-300 transition hover:-translate-y-1">
+                    <div class="w-14 h-14 rounded-2xl bg-pastelBlue-100 text-pastelBlue-dark flex items-center justify-center text-2xl font-bold mb-4 shadow-sm">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Materi Interaktif</h3>
+                    <p class="text-slate-600 text-sm">Penjelasan lengkap mengenai ciri-ciri, tanda baca, serta aturan perubahan kata ganti secara visual & animasi.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="card-glass rounded-3xl p-6 shadow-md border-2 border-pastelYellow-200 hover:border-pastelYellow-400 transition hover:-translate-y-1">
+                    <div class="w-14 h-14 rounded-2xl bg-pastelYellow-100 text-pastelYellow-dark flex items-center justify-center text-2xl font-bold mb-4 shadow-sm">
+                        <i class="fa-solid fa-clipboard-question"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Latihan Soal & Quiz</h3>
+                    <p class="text-slate-600 text-sm">Soal-soal latihan bergradasi untuk menguji pemahamanmu dengan pembahasan langsung dan penilaian instan.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="card-glass rounded-3xl p-6 shadow-md border-2 border-emerald-100 hover:border-emerald-300 transition hover:-translate-y-1">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl font-bold mb-4 shadow-sm">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Game Zombie Plants</h3>
+                    <p class="text-slate-600 text-sm">Lawan gelombang zombie yang membawa kalimat! Klasifikasikan kalimat langsung vs tidak langsung untuk menembak.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW: CP & TP ================= -->
+        <section id="view-cp" class="tab-view hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-pastelBlue-200">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-pastelBlue-400 text-white flex items-center justify-center text-2xl shadow-md">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-pastelBlue-dark">Capaian & Tujuan Pembelajaran</h2>
+                        <p class="text-slate-500 text-sm">Kurikulum Merdeka - Bahasa Indonesia Kelas 6 SD</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Capaian Pembelajaran -->
+                    <div class="bg-pastelBlue-100/60 rounded-2xl p-6 border border-pastelBlue-300">
+                        <div class="flex items-center gap-2 text-pastelBlue-dark font-bold text-lg mb-3">
+                            <i class="fa-solid fa-graduation-cap text-2xl"></i> Capaian Pembelajaran (CP)
+                        </div>
+                        <p class="text-slate-700 leading-relaxed text-justify">
+                            Peserta didik mampu menganalisis, memahami, dan mengubah bentuk <strong>kalimat langsung</strong> menjadi <strong>kalimat tidak langsung</strong> serta sebaliknya dengan memperhatikan penggunaan tanda baca (tanda petik, koma), kata hubung, dan perubahan kata ganti orang secara tepat dalam wacana tulisan maupun lisan.
+                        </p>
+                    </div>
+
+                    <!-- Tujuan Pembelajaran -->
+                    <div class="bg-pastelYellow-100/70 rounded-2xl p-6 border border-pastelYellow-300">
+                        <div class="flex items-center gap-2 text-pastelYellow-dark font-bold text-lg mb-3">
+                            <i class="fa-solid fa-list-check text-2xl"></i> Tujuan Pembelajaran (TP)
+                        </div>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-2">
+                                <span class="bg-pastelYellow-300 text-slate-800 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</span>
+                                <span>Mengidentifikasi ciri-ciri utama kalimat langsung dan kalimat tidak langsung.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="bg-pastelYellow-300 text-slate-800 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</span>
+                                <span>Menganalisis perbedaan penggunaan tanda baca (seperti tanda petik dua <code class="bg-white px-1.5 py-0.5 rounded text-rose-600 font-bold">"..."</code> dan koma <code class="bg-white px-1.5 py-0.5 rounded font-bold">,</code>).</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="bg-pastelYellow-300 text-slate-800 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</span>
+                                <span>Mengubah kalimat langsung menjadi kalimat tidak langsung dengan memperhatikan perubahan kata ganti (pronomina).</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="bg-pastelYellow-300 text-slate-800 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">4</span>
+                                <span>Menerapkan aturan kalimat langsung dan tidak langsung dalam percakapan sehari-hari dan menulis cerita.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Petunjuk Penggunaan -->
+                <div class="mt-8 bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                    <h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-pastelBlue-500"></i> Petunjuk Belajar Bagi Siswa
+                    </h3>
+                    <div class="grid sm:grid-cols-3 gap-4 text-sm text-slate-600">
+                        <div class="bg-white p-3 rounded-xl border border-slate-100 flex gap-3 items-center">
+                            <span class="text-2xl">1️⃣</span>
+                            <span>Bacalah materi di menu <strong>Materi</strong> secara cermat.</span>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-100 flex gap-3 items-center">
+                            <span class="text-2xl">2️⃣</span>
+                            <span>Uji pemahamanmu pada menu <strong>Latihan Soal</strong>.</span>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-100 flex gap-3 items-center">
+                            <span class="text-2xl">3️⃣</span>
+                            <span>Mainkan <strong>Game Zombie Plants</strong> untuk memperkuat ingatan!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW: MATERI INTERAKTIF ================= -->
+        <section id="view-materi" class="tab-view hidden space-y-6">
+            
+            <!-- Header Tab Materi -->
+            <div class="bg-gradient-to-r from-pastelBlue-300 to-pastelBlue-400 rounded-3xl p-6 text-white shadow-md flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold">Materi Pembelajaran Interaktif</h2>
+                    <p class="text-sky-100 text-sm">Pahami konsep kalimat langsung & tidak langsung secara visual!</p>
+                </div>
+                <div class="flex gap-2 bg-white/20 p-1.5 rounded-2xl backdrop-blur">
+                    <button onclick="showMateriSub('langsung')" id="btn-sub-langsung" class="px-4 py-2 rounded-xl text-sm font-bold bg-white text-pastelBlue-dark shadow">
+                        Kalimat Langsung
+                    </button>
+                    <button onclick="showMateriSub('tidak-langsung')" id="btn-sub-tidak" class="px-4 py-2 rounded-xl text-sm font-bold text-white hover:bg-white/20">
+                        Kalimat Tidak Langsung
+                    </button>
+                    <button onclick="showMateriSub('perubahan')" id="btn-sub-perubahan" class="px-4 py-2 rounded-xl text-sm font-bold text-white hover:bg-white/20">
+                        Aturan Perubahan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sub Section 1: Kalimat Langsung -->
+            <div id="materi-langsung" class="materi-card space-y-6">
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-pastelBlue-200">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-3 py-1 bg-pastelBlue-100 text-pastelBlue-dark rounded-full font-bold text-sm">Bagian 1</span>
+                        <h3 class="text-2xl font-bold text-slate-800">Apa itu Kalimat Langsung?</h3>
+                    </div>
+                    <p class="text-slate-700 text-lg leading-relaxed mb-6">
+                        <strong>Kalimat Langsung</strong> adalah kalimat yang menirukan ucapan atau ujaran seseorang secara persis <strong>sama ulangannya</strong> tanpa mengubah kata sedikit pun.
+                    </p>
+
+                    <!-- Interactive Cards Feature -->
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-sky-50 rounded-2xl p-5 border-2 border-dashed border-pastelBlue-300">
+                            <h4 class="font-bold text-pastelBlue-dark text-lg mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-star text-pastelYellow- dark"></i> Ciri-Ciri Kalimat Langsung:
+                            </h4>
+                            <ul class="space-y-2 text-slate-700 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-emerald-500 mt-1"></i>
+                                    <span>Menggunakan <strong>tanda petik dua ("...")</strong> untuk mengapit ucapan langsung.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-emerald-500 mt-1"></i>
+                                    <span>Huruf pertama di dalam tanda petik menggunakan <strong>Huruf Kapital</strong>.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-emerald-500 mt-1"></i>
+                                    <span>Tanda baca dipisahkan dengan tanda koma (<code class="font-bold">,</code>) antara pengiring dan kutipan.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-emerald-500 mt-1"></i>
+                                    <span>Intonasi nada bicara terdengar seperti membaca percakapan dialog.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Contoh Kalimat Langsung Visual -->
+                        <div class="bg-pastelYellow-100/80 rounded-2xl p-5 border-2 border-pastelYellow-300 flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-comment-dots text-pastelBlue-500"></i> Contoh Kalimat Langsung:
+                                </h4>
+                                <div class="bg-white p-4 rounded-2xl shadow-sm space-y-3 font-mono text-slate-800">
+                                    <p class="text-base">
+                                        Ibu berkata, <span class="text-rose-600 font-bold">"</span><span class="text-pastelBlue-dark font-bold">Sapu halaman itu sekarang!</span><span class="text-rose-600 font-bold">"</span>
+                                    </p>
+                                    <div class="text-xs font-sans text-slate-500 border-t pt-2 space-y-1">
+                                        <p><span class="inline-block w-3 h-3 bg-slate-400 rounded-full mr-1"></span> Pengiring: <em>Ibu berkata,</em></p>
+                                        <p><span class="inline-block w-3 h-3 bg-rose-500 rounded-full mr-1"></span> Tanda Petik: <em>"..."</em></p>
+                                        <p><span class="inline-block w-3 h-3 bg-pastelBlue-500 rounded-full mr-1"></span> Kalimat Petikan (Kapital): <em>Sapu halaman...</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick="speakText('Ibu berkata, Sapu halaman itu sekarang!')" class="mt-4 w-full py-2 bg-pastelBlue-500 hover:bg-pastelBlue- dark text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-sm transition">
+                                <i class="fa-solid fa-volume-high"></i> Dengarkan Pengucapan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sub Section 2: Kalimat Tidak Langsung -->
+            <div id="materi-tidak-langsung" class="materi-card hidden space-y-6">
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-pastelYellow-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-3 py-1 bg-pastelYellow-200 text-pastelYellow-dark rounded-full font-bold text-sm">Bagian 2</span>
+                        <h3 class="text-2xl font-bold text-slate-800">Apa itu Kalimat Tidak Langsung?</h3>
+                    </div>
+                    <p class="text-slate-700 text-lg leading-relaxed mb-6">
+                        <strong>Kalimat Tidak Langsung</strong> adalah kalimat yang menyampaikan kembali <strong>isi atau pokok ucapan</strong> seseorang dalam bentuk berita tanpa mengutip kata demi kata secara langsung.
+                    </p>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-amber-50 rounded-2xl p-5 border-2 border-dashed border-pastelYellow-400">
+                            <h4 class="font-bold text-pastelYellow-dark text-lg mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-lightbulb"></i> Ciri-Ciri Kalimat Tidak Langsung:
+                            </h4>
+                            <ul class="space-y-2 text-slate-700 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-emerald-500 mt-1"></i>
+                                    <span><strong>TIDAK menggunakan tanda petik</strong> (<code class="text-slate-400 font-bold">"..."</code>) sama sekali.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-emerald-500 mt-1"></i>
+                                    <span>Menggunakan kata hubung/konjungsi seperti: <span class="bg-pastelYellow-200 px-1.5 py-0.5 rounded font-bold text-slate-800">bahwa</span>, <span class="bg-pastelYellow-200 px-1.5 py-0.5 rounded font-bold text-slate-800">untuk</span>, <span class="bg-pastelYellow-200 px-1.5 py-0.5 rounded font-bold text-slate-800">agar</span>, <span class="bg-pastelYellow-200 px-1.5 py-0.5 rounded font-bold text-slate-800">supaya</span>, atau <span class="bg-pastelYellow-200 px-1.5 py-0.5 rounded font-bold text-slate-800">sebab</span>.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-emerald-500 mt-1"></i>
+                                    <span>Terjadi <strong>perubahan Kata Ganti Orang</strong> (seperti <em class="font-bold text-pastelBlue-dark">saya &rarr; dia/ia</em>).</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-emerald-500 mt-1"></i>
+                                    <span>Intonasi bernada datar dan diakhiri tanda titik (<code class="font-bold">.</code>).</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Contoh Kalimat Tidak Langsung Visual -->
+                        <div class="bg-pastelBlue-100/80 rounded-2xl p-5 border-2 border-pastelBlue-300 flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-comment-slash text-pastelBlue- dark"></i> Contoh Kalimat Tidak Langsung:
+                                </h4>
+                                <div class="bg-white p-4 rounded-2xl shadow-sm space-y-3 font-mono text-slate-800">
+                                    <p class="text-base">
+                                        Ibu menyuruh saya <span class="text-emerald-600 font-bold">untuk</span> menyapu halaman saat itu.
+                                    </p>
+                                    <div class="text-xs font-sans text-slate-500 border-t pt-2 space-y-1">
+                                        <p>✅ Tanpa tanda petik dua</p>
+                                        <p>✅ Ditambahkan kata hubung <strong>'untuk'</strong></p>
+                                        <p>✅ Kata ganti disesuaikan</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick="speakText('Ibu menyuruh saya untuk menyapu halaman saat itu.')" class="mt-4 w-full py-2 bg-pastelYellow-400 hover:bg-pastelYellow-500 text-slate-900 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-sm transition">
+                                <i class="fa-solid fa-volume-high"></i> Dengarkan Pengucapan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sub Section 3: Aturan Perubahan -->
+            <div id="materi-perubahan" class="materi-card hidden space-y-6">
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-pastelBlue-200">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-3 py-1 bg-emerald-200 text-emerald-800 rounded-full font-bold text-sm">Bagian 3</span>
+                        <h3 class="text-2xl font-bold text-slate-800">Aturan Perubahan Kata Ganti & Waktu</h3>
+                    </div>
+
+                    <p class="text-slate-700 mb-6">
+                        Saat merubah <strong>Kalimat Langsung &rarr; Kalimat Tidak Langsung</strong>, kamu harus mengubah kata ganti orang dan kata penunjuk waktu/tempat sesuai konteks!
+                    </p>
+
+                    <!-- Table of Changes -->
+                    <div class="overflow-x-auto mb-8">
+                        <table class="w-full text-left border-collapse bg-slate-50 rounded-2xl overflow-hidden border border-slate-200">
+                            <thead>
+                                <tr class="bg-pastelBlue-400 text-white font-bold">
+                                    <th class="p-3 border-b">Jenis Perubahan</th>
+                                    <th class="p-3 border-b">Kalimat Langsung</th>
+                                    <th class="p-3 border-b">Kalimat Tidak Langsung</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 text-sm text-slate-700">
+                                <tr>
+                                    <td class="p-3 font-bold bg-pastelBlue-50">Kata Ganti Orang I</td>
+                                    <td class="p-3 font-mono text-rose-600 font-semibold">"Saya" / "Aku"</td>
+                                    <td class="p-3 font-mono text-emerald-600 font-semibold">Dia / Ia / Namanya</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold bg-pastelBlue-50">Kata Ganti Orang I Jamak</td>
+                                    <td class="p-3 font-mono text-rose-600 font-semibold">"Kami" / "Kita"</td>
+                                    <td class="p-3 font-mono text-emerald-600 font-semibold">Mereka / Kami</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold bg-pastelBlue-50">Kata Ganti Orang II</td>
+                                    <td class="p-3 font-mono text-rose-600 font-semibold">"Kamu" / "Engkau"</td>
+                                    <td class="p-3 font-mono text-emerald-600 font-semibold">Saya / Dia</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold bg-pastelBlue-50">Keterangan Waktu</td>
+                                    <td class="p-3 font-mono text-rose-600 font-semibold">"Sekarang" / "Besok"</td>
+                                    <td class="p-3 font-mono text-emerald-600 font-semibold">Saat itu / Keesokan harinya</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold bg-pastelBlue-50">Keterangan Tempat</td>
+                                    <td class="p-3 font-mono text-rose-600 font-semibold">"Di sini" / "Ini"</td>
+                                    <td class="p-3 font-mono text-emerald-600 font-semibold">Di sana / Itu</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Interactive Converter Widget -->
+                    <div class="bg-gradient-to-br from-pastelBlue-100 to-pastelYellow-100 p-6 rounded-3xl border-2 border-pastelBlue-300">
+                        <h4 class="text-xl font-bold text-pastelBlue-dark mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-wand-magic-sparkles text-pastelYellow-dark"></i> Simulasi Interaktif Ubah Kalimat
+                        </h4>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">Pilih Contoh Kalimat Langsung:</label>
+                                <select id="sample-sentence-select" onchange="updateConverterWidget()" class="w-full p-3 rounded-xl border border-slate-300 font-semibold bg-white text-slate-800 shadow-sm focus:ring-2 focus:ring-pastelBlue-400">
+                                    <option value="0">Ayah berkata, "Saya akan membeli sepeda baru besok."</option>
+                                    <option value="1">Siti bertanya, "Apakah kamu sudah mengerjakan PR?"</option>
+                                    <option value="2">Pak Guru berseru, "Jangan membuang sampah di sini!"</option>
+                                </select>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-white p-4 rounded-2xl border border-slate-200">
+                                    <span class="text-xs font-bold uppercase tracking-wider text-rose-500 bg-rose-50 px-2 py-0.5 rounded">Kalimat Langsung</span>
+                                    <p id="sim-direct" class="mt-2 text-slate-800 font-bold text-lg font-mono">Ayah berkata, "Saya akan membeli sepeda baru besok."</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-2xl border border-emerald-300 shadow-md relative overflow-hidden">
+                                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">Hasil Kalimat Tidak Langsung</span>
+                                    <p id="sim-indirect" class="mt-2 text-emerald-800 font-bold text-lg font-mono">Ayah mengatakan bahwa ia akan membeli sepeda baru keesokan harinya.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW: LATIHAN SOAL ================= -->
+        <section id="view-latihan" class="tab-view hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-pastelYellow-300">
+                
+                <!-- Quiz Header Bar -->
+                <div class="flex flex-wrap justify-between items-center gap-4 border-b border-slate-100 pb-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-pastelBlue-dark">Quiz Latihan Soal</h2>
+                        <p class="text-slate-500 text-sm">Pilih jawaban yang paling tepat!</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="bg-pastelYellow-100 border border-pastelYellow-300 px-4 py-2 rounded-2xl flex items-center gap-2">
+                            <i class="fa-solid fa-trophy text-pastelYellow-dark text-xl"></i>
+                            <span class="font-bold text-slate-800 text-lg">Skor: <span id="quiz-score" class="text-pastelBlue-dark">0</span></span>
+                        </div>
+                        <button onclick="resetQuiz()" class="p-2.5 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-600 transition" title="Ulangi Quiz">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Progress Bar -->
+                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden mb-6">
+                    <div id="quiz-progress-bar" class="bg-pastelBlue-400 h-full w-0 transition-all duration-300"></div>
+                </div>
+
+                <!-- Quiz Card Body -->
+                <div id="quiz-card-container" class="space-y-6">
+                    <!-- Question Counter & Badge -->
+                    <div class="flex justify-between items-center">
+                        <span id="question-number-badge" class="px-3 py-1 bg-pastelBlue-100 text-pastelBlue-dark font-bold text-sm rounded-full">Soal 1 dari 10</span>
+                        <span id="question-category" class="text-xs font-semibold text-slate-400 uppercase">Identifikasi</span>
+                    </div>
+
+                    <!-- Question Text -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <p id="question-text" class="text-slate-800 font-bold text-lg md:text-xl">
+                            Loading pertanyaan...
+                        </p>
+                    </div>
+
+                    <!-- Options Grid -->
+                    <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Options generated dynamically -->
+                    </div>
+
+                    <!-- Feedback Box -->
+                    <div id="quiz-feedback-box" class="hidden p-4 rounded-2xl border text-sm space-y-1 transition-all">
+                        <div id="feedback-title" class="font-bold text-base flex items-center gap-2"></div>
+                        <p id="feedback-explanation" class="text-slate-700"></p>
+                    </div>
+
+                    <!-- Next Button -->
+                    <div class="flex justify-end pt-2">
+                        <button id="next-quiz-btn" onclick="nextQuestion()" class="hidden px-6 py-3 bg-pastelBlue-500 text-white font-bold rounded-2xl shadow-3d-blue btn-3d flex items-center gap-2">
+                            Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Complete Result Box (Hidden by default) -->
+                <div id="quiz-result-box" class="hidden text-center py-8 space-y-6">
+                    <div class="w-24 h-24 bg-pastelYellow-200 rounded-full flex items-center justify-center text-5xl mx-auto shadow-inner text-pastelYellow-dark">
+                        🏆
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold text-slate-800">Selesai Latihan!</h3>
+                        <p class="text-slate-600 mt-1">Kamu telah menyelesaikan seluruh soal quiz.</p>
+                    </div>
+                    <div class="bg-pastelBlue-50 border-2 border-pastelBlue-200 rounded-2xl p-6 max-w-sm mx-auto shadow-sm">
+                        <div class="text-sm font-bold text-slate-500 uppercase">Skor Akhir Kamu</div>
+                        <div id="final-score-text" class="text-5xl font-extrabold text-pastelBlue-dark my-2">80 / 100</div>
+                        <p id="final-score-comment" class="text-sm font-semibold text-slate-700">Hebat! Kamu memahami materi ini dengan sangat baik!</p>
+                    </div>
+                    <div class="flex justify-center gap-4">
+                        <button onclick="resetQuiz()" class="px-6 py-3 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded-2xl transition">
+                            Coba Lagi
+                        </button>
+                        <button onclick="switchTab('game')" class="px-6 py-3 bg-pastelYellow-400 text-slate-900 font-bold rounded-2xl shadow-3d-yellow btn-3d">
+                            Main Game Zombie!
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= VIEW: GAME ZOMBIE VS PLANTS ================= -->
+        <section id="view-game" class="tab-view hidden space-y-4">
+            
+            <!-- Game Top Header Panel -->
+            <div class="card-glass rounded-3xl p-4 md:p-6 shadow-md border-2 border-pastelYellow-300 flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-pastelBlue-dark flex items-center gap-2">
+                        🧟 Zombie Kalimat Defender 🌻
+                    </h2>
+                    <p class="text-slate-600 text-xs md:text-sm">Tembak zombie dengan senjata yang tepat: <strong>Tembakan Biru (Langsung)</strong> atau <strong>Tembakan Kuning (Tidak Langsung)</strong>!</p>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <div class="text-center bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="text-xs text-slate-400 font-bold block">SKOR</span>
+                        <span id="game-score-display" class="text-xl font-black text-pastelBlue-dark">0</span>
+                    </div>
+                    <div class="text-center bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="text-xs text-slate-400 font-bold block">NYAWA TAMAN</span>
+                        <div id="game-lives-display" class="flex gap-1 text-rose-500 text-sm mt-1">
+                            <i class="fa-solid fa-heart"></i>
+                            <i class="fa-solid fa-heart"></i>
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                    </div>
+                    <button id="btn-game-pause" onclick="toggleGamePause()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl font-bold text-slate-700 text-sm">
+                        <i class="fa-solid fa-pause"></i> Pause
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Canvas Game Area Container -->
+            <div class="relative rounded-3xl overflow-hidden border-4 border-emerald-400 shadow-xl bg-slate-900" style="min-height: 420px;">
+                
+                <!-- HTML5 Canvas -->
+                <canvas id="gameCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+
+                <!-- Start Screen Overlay -->
+                <div id="game-start-overlay" class="absolute inset-0 bg-slate-900/85 backdrop-blur flex flex-col items-center justify-center text-white p-6 text-center space-y-4 z-20">
+                    <div class="w-20 h-20 rounded-full bg-pastelYellow-300 flex items-center justify-center text-4xl shadow-lg text-slate-900 animate-bounce">
+                        🧟‍♂️
+                    </div>
+                    <h3 class="text-3xl md:text-4xl font-extrabold text-pastelYellow-300">ZOMBIE INVASION!</h3>
+                    <p class="max-w-md text-slate-200 text-sm leading-relaxed">
+                        Zombie membawa papan berisi kalimat! <br>
+                        Klik zombie atau baca kalimatnya, lalu tekan tombol <strong>"LANGSUNG"</strong> jika mengandung tanda petik / percakapan langsung, atau tombol <strong>"TIDAK LANGSUNG"</strong> jika berupa penyampaian berita!
+                    </p>
+                    <button onclick="startGame()" class="px-8 py-4 bg-pastelYellow-400 text-slate-900 text-xl font-black rounded-2xl shadow-3d-yellow btn-3d">
+                        <i class="fa-solid fa-play mr-2"></i> MULAI PERMAINAN
+                    </button>
+                </div>
+
+                <!-- Game Over Overlay -->
+                <div id="game-over-overlay" class="hidden absolute inset-0 bg-slate-900/90 backdrop-blur flex flex-col items-center justify-center text-white p-6 text-center space-y-4 z-20">
+                    <div class="text-6xl">🧟‍♂️💥</div>
+                    <h3 class="text-4xl font-extrabold text-rose-500">TAMAN DIBERANTAK ZOMBIE!</h3>
+                    <p class="text-slate-300">Skor Akhir Permainan Kamu:</p>
+                    <div id="game-final-score" class="text-5xl font-black text-pastelYellow-300">0</div>
+                    <button onclick="startGame()" class="px-8 py-3 bg-pastelBlue-400 text-white font-bold text-lg rounded-2xl shadow-3d-blue btn-3d">
+                        <i class="fa-solid fa-rotate-right mr-2"></i> Main Lagi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Game Control Buttons Bottom Deck -->
+            <div class="card-glass rounded-3xl p-4 shadow-md border-2 border-pastelBlue-200 flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <span class="text-sm font-bold text-slate-600 sm:mr-2">Senjata Tembakan:</span>
+                <button onclick="triggerWeapon('LANGSUNG')" class="w-full sm:w-auto px-8 py-4 bg-pastelBlue-500 hover:bg-pastelBlue-dark text-white font-bold rounded-2xl shadow-3d-blue btn-3d flex items-center justify-center gap-3 text-lg">
+                    <span class="w-4 h-4 rounded-full bg-sky-300 inline-block shadow"></span> KALIMAT LANGSUNG ("...")
+                </button>
+                <button onclick="triggerWeapon('TIDAK_LANGSUNG')" class="w-full sm:w-auto px-8 py-4 bg-pastelYellow-400 hover:bg-pastelYellow-500 text-slate-900 font-bold rounded-2xl shadow-3d-yellow btn-3d flex items-center justify-center gap-3 text-lg">
+                    <span class="w-4 h-4 rounded-full bg-amber-600 inline-block shadow"></span> KALIMAT TIDAK LANGSUNG
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white/80 border-t border-pastelBlue-200 py-4 px-6 text-center text-xs text-slate-500 mt-auto">
+        <p>© 2026 BindoFun Kelas 6 SD • Media Pembelajaran Bahasa Indonesia Interaktif</p>
+    </footer>
+
+    <script>
+        /* ==========================================================================
+           1. AUDIO SYNTHESIZER (Web Audio API - No external broken MP3 links!)
+           ========================================================================== */
+        let audioEnabled = true;
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioCtx();
+        }
+
+        function playSynthSound(type) {
+            if (!audioEnabled) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                    osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.linearRampToValueAtTime(110, now + 0.2);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } else if (type === 'shoot') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(600, now);
+                    osc.frequency.exponentialRampToValueAtTime(150, now + 0.1);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                    osc.start(now);
+                    osc.stop(now + 0.1);
+                } else if (type === 'zombie-hit') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(150, now);
+                    osc.frequency.linearRampToValueAtTime(60, now + 0.15);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                }
+            } catch (e) {
+                console.log("Audio not supported or blocked");
+            }
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const icon = document.getElementById('sound-icon');
+            if (audioEnabled) {
+                icon.className = 'fa-solid fa-volume-high text-pastelBlue-dark';
+                playSynthSound('click');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-slate-400';
+            }
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        /* ==========================================================================
+           2. NAVIGATION TAB SWITCHING LOGIC
+           ========================================================================== */
+        function switchTab(tabId) {
+            playSynthSound('click');
+            // Hide all tab views
+            document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
+            
+            // Show target tab
+            const targetView = document.getElementById(`view-${tabId}`);
+            if (targetView) targetView.classList.remove('hidden');
+
+            // Update tab button styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn px-3 py-2 rounded-xl text-sm font-bold flex items-center gap-2 bg-white text-slate-700 hover:bg-pastelBlue-100";
+            });
+
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                if (tabId === 'game') {
+                    activeBtn.className = "nav-btn px-3 py-2 rounded-xl text-sm font-bold flex items-center gap-2 bg-pastelYellow-400 text-slate-800 shadow-3d-yellow btn-3d";
+                } else {
+                    activeBtn.className = "nav-btn px-3 py-2 rounded-xl text-sm font-bold flex items-center gap-2 bg-pastelBlue-400 text-white shadow-3d-blue btn-3d";
+                }
+            }
+
+            // Canvas resize check if switching to game
+            if (tabId === 'game') {
+                setTimeout(resizeCanvas, 50);
+            }
+        }
+
+        /* ==========================================================================
+           3. MATERI TAB & CONVERTER SIMULATION
+           ========================================================================== */
+        function showMateriSub(sub) {
+            playSynthSound('click');
+            document.querySelectorAll('.materi-card').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`materi-${sub}`).classList.remove('hidden');
+
+            // Button highlights
+            const bLangsung = document.getElementById('btn-sub-langsung');
+            const bTidak = document.getElementById('btn-sub-tidak');
+            const bPerubahan = document.getElementById('btn-sub-perubahan');
+
+            bLangsung.className = "px-4 py-2 rounded-xl text-sm font-bold " + (sub === 'langsung' ? "bg-white text-pastelBlue-dark shadow" : "text-white hover:bg-white/20");
+            bTidak.className = "px-4 py-2 rounded-xl text-sm font-bold " + (sub === 'tidak-langsung' ? "bg-white text-pastelBlue-dark shadow" : "text-white hover:bg-white/20");
+            bPerubahan.className = "px-4 py-2 rounded-xl text-sm font-bold " + (sub === 'perubahan' ? "bg-white text-pastelBlue-dark shadow" : "text-white hover:bg-white/20");
+        }
+
+        const simData = [
+            {
+                direct: 'Ayah berkata, "Saya akan membeli sepeda baru besok."',
+                indirect: 'Ayah mengatakan bahwa ia akan membeli sepeda baru keesokan harinya.'
+            },
+            {
+                direct: 'Siti bertanya, "Apakah kamu sudah mengerjakan PR?"',
+                indirect: 'Siti menanyakan apakah saya sudah mengerjakan PR.'
+            },
+            {
+                direct: 'Pak Guru berseru, "Jangan membuang sampah di sini!"',
+                indirect: 'Pak Guru melarang kami untuk membuang sampah di sana.'
+            }
+        ];
+
+        function updateConverterWidget() {
+            const idx = document.getElementById('sample-sentence-select').value;
+            document.getElementById('sim-direct').innerText = simData[idx].direct;
+            document.getElementById('sim-indirect').innerText = simData[idx].indirect;
+            playSynthSound('click');
+        }
+
+        /* ==========================================================================
+           4. QUIZ / LATIHAN SOAL DATA & LOGIC (20 SOAL HOTS)
+           ========================================================================== */
+        const quizQuestions = [
+            {
+                question: 'Kepala Sekolah berkata kepada para siswa, "Minggu depan, kita akan menyambut kedatangan pahlawan literasi di sekolah kita ini."<br><br>Jika percakapan tersebut dilaporkan oleh seorang siswa kepada ibunya di rumah pada hari yang sama, bentuk kalimat tidak langsung yang paling tepat adalah...',
+                options: [
+                    'Kepala Sekolah mengatakan bahwa minggu depan mereka akan menyambut kedatangan pahlawan literasi di sekolah mereka itu.',
+                    'Kepala Sekolah menyampaikan bahwa minggu depan kita akan menyambut pahlawan literasi di sekolah ini.',
+                    'Kepala Sekolah berkata jika minggu depan pahlawan literasi datang ke sekolah kita ini.',
+                    'Kepala Sekolah menegaskan bahwa minggu depan para siswa menyambut kedatangan pahlawan literasi di sekolah kami ini.'
+                ],
+                answer: 0,
+                explanation: 'Sudut pandang pelapor (siswa ke ibunya) mengubah kata ganti "kita" menjadi "mereka" (merujuk pada warga sekolah) dan penunjuk tempat "di sekolah kita ini" menjadi "di sekolah mereka itu".'
+            },
+            {
+                question: 'Cermati penulisan berikut:<br><em>"Mengapa kamu tidak ikut latihan menari kemarin"? tanya Bu Guru, "Padahal kamu sudah berjanji.</em><br><br>Analisis kesalahan penulisan tanda baca pada kalimat langsung di atas adalah...',
+                options: [
+                    'Tanda petik penutup di akhir kalimat belum ada dan tidak perlu koma setelah Bu Guru.',
+                    'Tanda tanya (?) seharusnya berada di dalam tanda petik penutup dan huruf "Padahal" ditulis kapital.',
+                    'Tanda tanya (?) harus diletakkan di dalam tanda petik, diikuti tanda petik pembuka sebelum kata "padahal" (huruf kecil).',
+                    'Tidak ada kesalahan karena tanda tanya boleh diletakkan di luar tanda petik.'
+                ],
+                answer: 2,
+                explanation: 'Tanda tanya (?) wajib berada di dalam tanda petik. Lanjutan pengiring ("tanya Bu Guru,") harus diikuti tanda petik pembuka `"` dan kata "padahal" diawali huruf kecil karena merupakan sambungan kalimat.'
+            },
+            {
+                question: 'Perhatikan dialog berikut:<br><strong>Dina:</strong> "Apakah kamu sempat memesan buku perpustakaan itu untuk besok?"<br><br>Bentuk kalimat tidak langsung yang presisi untuk melaporkan pertanyaan Dina adalah...',
+                options: [
+                    'Dina menanyakan kepada Romi apakah ia sempat memesan buku perpustakaan tersebut untuk keesokan harinya.',
+                    'Dina bertanya kepada Romi bahwa dia memesan buku perpustakaan itu besok.',
+                    'Dina menyuruh Romi memesan buku perpustakaan tersebut untuk hari besok.',
+                    'Dina menegaskan Romi untuk tidak lupa memesan buku di perpustakaan.'
+                ],
+                answer: 0,
+                explanation: 'Pertanyaan interogatif butuh kata hubung "apakah", kata ganti "kamu" -> "ia/Romi", serta penunjuk waktu "besok" -> "keesokan harinya".'
+            },
+            {
+                question: 'Perhatikan dua kalimat berikut:<br>(1) Dokter berkata, "Jika kamu rutin minum obat ini, kesehatanmu akan pulih dalam tiga hari."<br>(2) Dokter menyatakan bahwa jika saya rutin minum obat tersebut, kesehatan saya akan pulih dalam tiga hari saat itu.<br><br>Evaluasi kelemahan pada pengubahan kalimat (1) menjadi (2) adalah...',
+                options: [
+                    'Penggunaan kata ganti "saya" seharusnya "dia".',
+                    'Penambahan frasa "saat itu" di akhir kalimat membuat makna durasi waktu menjadi rancu dan tidak logis.',
+                    'Hilangnya kata "rutin" pada klausa syarat.',
+                    'Penggunaan konjungsi "bahwa" setelah kata "menyatakan".'
+                ],
+                answer: 1,
+                explanation: 'Frasa "dalam tiga hari" sudah menerangkan durasi masa pemulihan. Penambahan "saat itu" justru membuat makna kalimat berbenturan dan membingungkan.'
+            },
+            {
+                question: 'Teks Tidak Langsung: <em>Paman menasihati Andi agar tidak bermain ponsel hingga larut malam supaya matanya tidak cepat lelah.</em><br><br>Pasangan kalimat langsung yang PALING TEPAT mewakili isi nasihat Paman adalah...',
+                options: [
+                    'Paman menasihati Andi, "Kamu jangan bermain ponsel hingga larut malam agar matamu tidak cepat lelah!"',
+                    'Paman berkata, "Jangan bermain ponsel hingga larut malam, Andi, supaya mataku tidak lelah!"',
+                    'Paman berseru, "Andi, apakah matamu tidak lelah karena bermain ponsel hingga larut malam?"',
+                    'Paman bertanya, "Mengapa kamu bermain ponsel sampai larut malam sehingga matamu lelah, Andi?"'
+                ],
+                answer: 0,
+                explanation: 'Opsi A secara presisi memuat nasihat larangan dan alasan penjelas dengan perubahan kata ganti orang kedua yang sesuai ("kamu" & "matamu").'
+            },
+            {
+                question: 'Bu Anita berkata kepada Pak Heru, "Saya telah menyerahkan berkas laporan milik Budi kepada sekretaris Anda."<br><br>Mengapa pengubahan ke kalimat tidak langsung: <em>"Bu Anita mengatakan kepada Pak Heru bahwa ia telah menyerahkan berkas milik Budi kepada sekretarisnya"</em> memicu ambiguitas?',
+                options: [
+                    'Karena kata "bahwa" tidak sesuai untuk kalimat berita.',
+                    'Karena akhiran "-nya" dan kata "ia" dapat menimbulkan tafsir ganda merujuk pada Bu Anita, Pak Heru, atau Budi.',
+                    'Karena kata "berkas" wajib diganti dengan "dokumen".',
+                    'Karena nama Pak Heru tidak perlu ditulis kembali.'
+                ],
+                answer: 1,
+                explanation: 'Kata ganti "ia" dan "-nya" memiliki lebih dari satu kemungkinan acuan tokoh dalam konteks (Bu Anita, Pak Heru, atau Budi), sehingga makna kalimat menjadi ambigu.'
+            },
+            {
+                question: '<em>"Wah, indah sekali pemandangan matahari terbit di puncak gunung ini!"</em> seru Rian kepada temannya.<br><br>Apabila diubah menjadi kalimat tidak langsung yang memuat nuansa kekaguman Rian secara tepat, penulisan yang benar adalah...',
+                options: [
+                    'Rian mengagumi keindahan pemandangan matahari terbit di puncak gunung tersebut kepada temannya.',
+                    'Rian bertanya kepada temannya apakah pemandangan matahari terbit di puncak gunung itu indah.',
+                    'Rian menyuruh temannya untuk melihat pemandangan matahari terbit di puncak gunung ini.',
+                    'Rian memberitahukan temannya bahwa ia sedang berada di puncak gunung.'
+                ],
+                answer: 0,
+                explanation: 'Ungkapan emosi/kekaguman ("Wah, indah sekali...") paling tepat ditranskripsikan menggunakan kata kerja emotif "Rian mengagumi keindahan..."'
+            },
+            {
+                question: 'Manakah kelompok pengubahan kata penunjuk tempat dan waktu dari **Kalimat Langsung → Tidak Langsung** yang SELURUHNYA BENAR dan baku?',
+                options: [
+                    'Ini → Itu | Kemarin → Dua hari lalu | Sekarang → Saat itu',
+                    'Di sini → Di sana | Hari ini → Hari itu | Besok → Keesokan harinya',
+                    'Kemarin → Besok | Sekarang → Nanti | Di sini → Di situ',
+                    'Ini → Sini | Hari ini → Kemarin | Besok → Lusa'
+                ],
+                answer: 1,
+                explanation: 'Pengubahan baku penunjuk acuan: "Di sini" menjadi "Di sana", "Hari ini" menjadi "Hari itu", dan "Besok" menjadi "Keesokan harinya".'
+            },
+            {
+                question: 'Petugas perpustakaan menegaskan, "Kembalikan buku yang kalian pinjam tepat pada waktunya!"<br><br>Perubahan menjadi kalimat tidak langsung yang tepat sesuai kausa perintah jamak adalah...',
+                options: [
+                    'Petugas perpustakaan menegaskan agar kami mengembalikan buku yang dipinjam tepat pada waktunya.',
+                    'Petugas perpustakaan menanyakan kapan kami mengembalikan buku yang dipinjam.',
+                    'Petugas perpustakaan mengira bahwa buku yang kami pinjam sudah dikembalikan.',
+                    'Petugas perpustakaan berkata bahwa buku harus dikembalikan sekarang juga.'
+                ],
+                answer: 0,
+                explanation: 'Kalimat imperatif jamak ("kalian") diubah menjadi kalimat berita imbauan menggunakan kata hubung "agar/supaya" dan kata ganti "kami/mereka".'
+            },
+            {
+                question: 'Cermati kalimat berikut:<br><code>Ayah menasehati adik "jangan pernah menunda-nunda pekerjaan sekolahmu."</code><br><br>Perbaikan tanda baca dan huruf kapital yang benar pada kalimat langsung di atas adalah...',
+                options: [
+                    'Ayah menasehati adik, "Jangan pernah menunda-nunda pekerjaan sekolahmu!"',
+                    'Ayah menasehati adik "Jangan pernah menunda-nunda pekerjaan sekolahmu."',
+                    'Ayah menasehati adik, "jangan pernah menunda-nunda pekerjaan sekolahmu".',
+                    'Ayah menasehati, adik "Jangan pernah menunda-nunda pekerjaan sekolahmu!"'
+                ],
+                answer: 0,
+                explanation: 'Wajib ada tanda koma sebelum kutipan, diawali huruf kapital "Jangan...", dan diakhiri tanda baca di dalam tanda petik.'
+            },
+            {
+                question: '<em>Wartawan melaporkan bahwa Menteri Pendidikan menyatakan <u>kalau</u> ujian sekolah akan berbasis proyek.</em><br><br>Penyuntingan kata yang digarisbawahi agar menjadi kalimat tidak langsung berlaras baku adalah...',
+                options: [
+                    'Diganti dengan kata **bahwa**',
+                    'Diganti dengan kata **apabila**',
+                    'Diganti dengan kata **sehingga**',
+                    'Dihapus saja tanpa pengganti'
+                ],
+                answer: 0,
+                explanation: 'Kata "kalau" adalah variasi ragam lisan. Dalam ragam tulis resmi/baku kalimat tidak langsung, digantikan dengan konjungsi "bahwa".'
+            },
+            {
+                question: 'Ibu Guru berkata, "Siapa saja yang belum mengumpulkan tugas, tidak diperkenankan mengikuti kegiatan olahraga."<br><br>Bentuk kalimat tidak langsung yang memuat makna implisit dengan tepat adalah...',
+                options: [
+                    'Ibu Guru menegaskan bahwa siswa yang ingin mengikuti kegiatan olahraga wajib mengumpulkan tugas terlebih dahulu.',
+                    'Ibu Guru melarang semua siswa mengikuti kegiatan olahraga di lapangan.',
+                    'Ibu Guru menanyakan alasan siswa belum mengerjakan tugas olahraga.',
+                    'Ibu Guru menyuruh siswa belajar di kelas saat jam olahraga.'
+                ],
+                answer: 0,
+                explanation: 'Pernyataan Ibu Guru menyiratkan bahwa pengumpulkan tugas adalah syarat mutlak (wajib) sebelum diizinkan mengikuti olahraga.'
+            },
+            {
+                question: '"Mengapa kamu terlambat masuk kelas hari ini, Budi?" tanya Pak Guru.<br><br>Pengubahan kalimat interogatif tersebut menjadi kalimat tidak langsung yang tepat adalah...',
+                options: [
+                    'Pak Guru menanyakan alasan Budi terlambat masuk kelas pada hari itu.',
+                    'Pak Guru bertanya bahwa Budi terlambat masuk kelas hari ini.',
+                    'Pak Guru menyuruh Budi agar tidak terlambat masuk kelas lagi.',
+                    'Pak Guru memberitahukan bahwa Budi terlambat masuk kelas pada hari itu.'
+                ],
+                answer: 0,
+                explanation: 'Kata tanya "mengapa" menunjukkan pertanyaan alasan, yang secara baku diubah menjadi "menanyakan alasan...", dengan "hari ini" -> "hari itu".'
+            },
+            {
+                question: '"Saya menyukai pelajaran Bahasa Indonesia," kata Tari, "karena materinya sangat menyenangkan."<br><br>Mengapa kata "karena" pada kalimat dialog di atas ditulis menggunakan HURUF KECIL?',
+                options: [
+                    'Karena kata "karena" adalah lanjutan klausa dari dialog pertama yang terpotong oleh pengiring.',
+                    'Karena terjadi kesalahan cetak dalam penulisan kalimat dialog tersebut.',
+                    'Karena berada di dalam tanda petik dua.',
+                    'Karena diawali oleh kata pengiring "kata Tari".'
+                ],
+                answer: 0,
+                explanation: 'Jika petikan dialog terpisah oleh kata pengiring namun masih merupakan satu kesatuan kalimat utuh, maka petikan lanjutan diawali huruf kecil.'
+            },
+            {
+                question: 'Teks Tidak Langsung: <em>Pak Lurah mengimbau seluruh warga Desa Sukamaju untuk bergotong-royong membersihkan selokan pada hari Minggu esok guna mencegah banjir.</em><br><br>Bentuk kalimat langsung yang tepat adalah...',
+                options: [
+                    'Pak Lurah berkata, "Saya mengimbau seluruh warga Desa Sukamaju untuk bergotong-royong membersihkan selokan besok hari Minggu guna mencegah banjir."',
+                    'Pak Lurah bertanya, "Apakah warga Desa Sukamaju mau membersihkan selokan hari Minggu besok?"',
+                    '"Selokan Desa Sukamaju harus dibersihkan sekarang juga!" teriak Pak Lurah.',
+                    'Pak Lurah menyampaikan, "Warga Desa Sukamaju sudah membersihkan selokan kemarin."'
+                ],
+                answer: 0,
+                explanation: 'Opsi A secara persis mengembalikan bentuk penyampaian imbauan langsung dengan penyesuaian penunjuk waktu "besok hari Minggu".'
+            },
+            {
+                question: 'Kakak berkata, "Seandainya aku memiliki waktu luang lebih banyak, aku ingin belajar melukis lanskap."<br><br>Bentuk kalimat tidak langsung yang paling tepat adalah...',
+                options: [
+                    'Kakak mengungkapkan bahwa seandainya ia memiliki waktu luang lebih banyak, ia ingin belajar melukis lanskap.',
+                    'Kakak menyuruh saya belajar melukis lanskap apabila ada waktu luang.',
+                    'Kakak bertanya apakah saya memiliki waktu luang untuk belajar melukis lanskap.',
+                    'Kakak memberitahukan bahwa aku harus belajar melukis lanskap saat waktu luang.'
+                ],
+                answer: 0,
+                explanation: 'Klausa pengandaian "seandainya" dipertahankan, sedangkan kata ganti orang pertama "aku" diubah konsisten menjadi kata ganti orang ketiga "ia".'
+            },
+            {
+                question: 'Manakah penulisan percakapan dialog berurutan yang 100% MEMENUHI KAIDAH PUEBI / EJAAN YANG DISEMPURNAKAN?',
+                options: [
+                    '"Apakah kamu sudah makan?" tanya Ibu.<br>"Sudah, Bu," jawab Kiki.',
+                    '"Apakah kamu sudah makan"? tanya Ibu.<br>"Sudah, Bu" jawab Kiki.',
+                    '"Apakah kamu sudah makan?" Tanya Ibu.<br>"Sudah, Bu," Jawab Kiki.',
+                    '"Apakah kamu sudah makan," tanya Ibu?<br>"Sudah, Bu," jawab Kiki.'
+                ],
+                answer: 0,
+                explanation: 'Tanda baca berada di dalam tanda petik, verba pengiring ("tanya" & "jawab") diawali huruf kecil, dan ada koma sebelum petik penutup.'
+            },
+            {
+                question: '"Mari kita jaga kebersihan lingkungan sekolah kita bersama-sama!" ajak Ketua OSIS.<br><br>Pengubahan kalimat ajakan tersebut menjadi kalimat tidak langsung yang paling tepat adalah...',
+                options: [
+                    'Ketua OSIS mengajak seluruh siswa untuk menjaga kebersihan lingkungan sekolah mereka bersama-sama.',
+                    'Ketua OSIS bertanya mengapa kita tidak menjaga kebersihan lingkungan sekolah.',
+                    'Ketua OSIS melaran siswa mengotori lingkungan sekolah kita.',
+                    'Ketua OSIS berkata bahwa kita telah menjaga kebersihan lingkungan sekolah bersama-sama.'
+                ],
+                answer: 0,
+                explanation: 'Kalimat ajakan "Mari..." diubah secara idiomatik menjadi "mengajak... untuk..." dengan kata ganti "sekolah mereka".'
+            },
+            {
+                question: 'Cermati kutipan teks berita berikut:<br>(1) <em>Kepala BMKG mengimbau masyarakat untuk tetap waspada terhadap potensi cuaca ekstrem.</em><br>(2) <em>"Masyarakat diharapkan tidak panik namun tetap bersiap," ujarnya saat konferensi pers.</em><br><br>Analisis jenis kalimat (1) dan (2) adalah...',
+                options: [
+                    'Kalimat (1) adalah kalimat tidak langsung, sedangkan kalimat (2) adalah kalimat langsung.',
+                    'Kalimat (1) dan (2) keduanya merupakan kalimat langsung.',
+                    'Kalimat (1) adalah kalimat langsung, sedangkan kalimat (2) adalah kalimat tidak langsung.',
+                    'Kalimat (1) dan (2) keduanya merupakan kalimat tidak langsung.'
+                ],
+                answer: 0,
+                explanation: 'Kalimat (1) tidak menggunakan tanda petik (kalimat berita/tidak langsung), sedangkan kalimat (2) menggunakan kutipan tanda petik dua (kalimat langsung).'
+            },
+            {
+                question: 'Paman berkata kepada aku dan adikku, "Paman akan mengajak kalian mengunjungi museum sejarah di kota ini besok."<br><br>Apabila diubah menjadi kalimat tidak langsung dari sudut pandang "aku", bentuk yang tepat adalah...',
+                options: [
+                    'Paman mengatakan kepada aku dan adikku bahwa beliau akan mengajak kami mengunjungi museum sejarah di kota itu keesokan harinya.',
+                    'Paman berkata bahwa paman akan mengajak kalian mengunjungi museum di kota ini besok.',
+                    'Paman menanyakan apakah aku dan adikku ingin pergi ke museum di kota ini besok.',
+                    'Paman menyuruh kami pergi ke museum sejarah di kota itu besok.'
+                ],
+                answer: 0,
+                explanation: 'Paman -> beliau/Paman, kalian -> kami (aku + adikku), di kota ini -> di kota itu, besok -> keesokan harinya.'
+            }
+        ];
+
+        let currentQuestionIdx = 0;
+        let quizScore = 0;
+        let answered = false;
+
+        function loadQuestion() {
+            answered = false;
+            const q = quizQuestions[currentQuestionIdx];
+
+            document.getElementById('question-number-badge').innerText = `Soal ${currentQuestionIdx + 1} dari ${quizQuestions.length}`;
+            document.getElementById('question-text').innerHTML = q.question;
+            
+            // Progress bar
+            const pct = ((currentQuestionIdx) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${pct}%`;
+
+            // Hide feedback & next button
+            document.getElementById('quiz-feedback-box').classList.add('hidden');
+            document.getElementById('next-quiz-btn').classList.add('hidden');
+
+            // Render Options
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+
+            const optionLetters = ['A', 'B', 'C', 'D'];
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "p-4 rounded-2xl border-2 border-slate-200 hover:border-pastelBlue-400 bg-white text-left font-semibold text-slate-800 transition flex items-center gap-3 shadow-sm hover:bg-pastelBlue-50";
+                btn.onclick = () => checkAnswer(idx, btn);
+                btn.innerHTML = `
+                    <span class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center font-bold text-slate-600 shrink-0 border border-slate-200">${optionLetters[idx]}</span>
+                    <span>${opt}</span>
+                `;
+                grid.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIdx, btnElement) {
+            if (answered) return;
+            answered = true;
+
+            const q = quizQuestions[currentQuestionIdx];
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackExp = document.getElementById('feedback-explanation');
+            const allOptionBtns = document.getElementById('options-grid').children;
+
+            if (selectedIdx === q.answer) {
+                // Correct - 5 points per question (20 questions * 5 = 100 max)
+                playSynthSound('correct');
+                quizScore += 5;
+                document.getElementById('quiz-score').innerText = quizScore;
+                
+                btnElement.className = "p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 font-semibold text-emerald-900 transition flex items-center gap-3 shadow-md";
+                
+                feedbackBox.className = "p-4 rounded-2xl border border-emerald-300 bg-emerald-50 text-sm space-y-1 block animate-fade-in";
+                feedbackTitle.className = "font-bold text-base text-emerald-800 flex items-center gap-2";
+                feedbackTitle.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i> Jawaban Kamu Benar! (+5 Poin)`;
+            } else {
+                // Wrong
+                playSynthSound('wrong');
+                btnElement.className = "p-4 rounded-2xl border-2 border-rose-400 bg-rose-50 font-semibold text-rose-900 transition flex items-center gap-3 shadow-md";
+                
+                // Highlight correct one
+                allOptionBtns[q.answer].className = "p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 font-semibold text-emerald-900 transition flex items-center gap-3 shadow-md";
+
+                feedbackBox.className = "p-4 rounded-2xl border border-rose-300 bg-rose-50 text-sm space-y-1 block animate-fade-in";
+                feedbackTitle.className = "font-bold text-base text-rose-800 flex items-center gap-2";
+                feedbackTitle.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600"></i> Jawaban Kurang Tepat`;
+            }
+
+            feedbackExp.innerText = q.explanation;
+            document.getElementById('next-quiz-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            playSynthSound('click');
+            currentQuestionIdx++;
+            if (currentQuestionIdx < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-progress-bar').style.width = `100%`;
+            document.getElementById('quiz-card-container').classList.add('hidden');
+            document.getElementById('quiz-result-box').classList.remove('hidden');
+
+            document.getElementById('final-score-text').innerText = `${quizScore} / 100`;
+
+            const commentEl = document.getElementById('final-score-comment');
+            if (quizScore >= 80) {
+                commentEl.innerText = "🌟 Luar Biasa! Kamu sudah sangat menguasai materi Kalimat Langsung & Tidak Langsung!";
+            } else if (quizScore >= 60) {
+                commentEl.innerText = "👍 Bagus! Pemahamanmu sudah cukup baik, pelajari lagi poin yang keliru ya!";
+            } else {
+                commentEl.innerText = "💪 Jangan menyerah! Ulangi membaca materi dan coba quiz sekali lagi!";
+            }
+        }
+
+        function resetQuiz() {
+            playSynthSound('click');
+            currentQuestionIdx = 0;
+            quizScore = 0;
+            document.getElementById('quiz-score').innerText = '0';
+            document.getElementById('quiz-card-container').classList.remove('hidden');
+            document.getElementById('quiz-result-box').classList.add('hidden');
+            loadQuestion();
+        }
+
+        // Initialize quiz on load
+        loadQuestion();
+
+        /* ==========================================================================
+           5. GAME: ZOMBIE VS PLANTS "KALIMAT DEFENDER" (HTML5 Canvas Engine)
+           ========================================================================== */
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let gameRunning = false;
+        let gamePaused = false;
+        let gameScore = 0;
+        let gameLives = 3;
+        let spawnTimer = 0;
+        let spawnInterval = 180; // frames
+        let gameFrame = 0;
+
+        // Sentences Database for Zombies
+        const gameSentencePool = [
+            { text: 'Ibu berkata, "Ayo makan siang!"', type: 'LANGSUNG' },
+            { text: 'Budi mengatakan bahwa ia terlambat.', type: 'TIDAK_LANGSUNG' },
+            { text: '"Di mana rumahmu?" tanya Siti.', type: 'LANGSUNG' },
+            { text: 'Ayah melarang kami bermain hujan.', type: 'TIDAK_LANGSUNG' },
+            { text: 'Dino berseru, "Hati-hati di jalan!"', type: 'LANGSUNG' },
+            { text: 'Pak Guru menanyakan hasil ujian.', type: 'TIDAK_LANGSUNG' },
+            { text: 'Kaka berteriak, "Tolong ambilkan buku!"', type: 'LANGSUNG' },
+            { text: 'Rani berjanji akan datang besok.', type: 'TIDAK_LANGSUNG' },
+            { text: '"Jangan bising!" kata Paman.', type: 'LANGSUNG' },
+            { text: 'Dia menyuruh saya menunggu di sini.', type: 'TIDAK_LANGSUNG' }
+        ];
+
+        let zombies = [];
+        let projectiles = [];
+        let particles = [];
+
+        function resizeCanvas() {
+            if (canvas.parentElement) {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = Math.max(420, canvas.parentElement.clientHeight || 420);
+            }
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Zombie {
+            constructor(sentenceObj) {
+                this.x = canvas.width + 20;
+                this.y = 80 + Math.random() * (canvas.height - 200);
+                this.width = 50;
+                this.height = 70;
+                this.speed = 0.6 + Math.random() * 0.4;
+                this.sentence = sentenceObj.text;
+                this.type = sentenceObj.type; // 'LANGSUNG' or 'TIDAK_LANGSUNG'
+                this.isTargeted = false;
+            }
+
+            update() {
+                this.x -= this.speed;
+            }
+
+            draw() {
+                // Draw Zombie body
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                // Zombie Body Shadow
+                ctx.fillStyle = 'rgba(0,0,0,0.2)';
+                ctx.beginPath();
+                ctx.ellipse(25, 65, 20, 8, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Zombie Body Greenish
+                ctx.fillStyle = '#6EE7B7'; // Soft Pastel Green Zombie
+                ctx.fillRect(15, 25, 20, 30);
+
+                // Head
+                ctx.fillStyle = '#A7F3D0';
+                ctx.beginPath();
+                ctx.arc(25, 18, 16, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Eyes
+                ctx.fillStyle = '#1E293B';
+                ctx.beginPath();
+                ctx.arc(20, 15, 3, 0, Math.PI * 2);
+                ctx.arc(30, 15, 3, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Funny mouth
+                ctx.strokeStyle = '#064E3B';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(25, 22, 5, 0, Math.PI);
+                ctx.stroke();
+
+                // Clothes (Blue T-shirt)
+                ctx.fillStyle = '#38BDF8';
+                ctx.fillRect(12, 30, 26, 20);
+
+                ctx.restore();
+
+                // Draw Sentence Dialog Board Above Zombie
+                ctx.save();
+                ctx.font = 'bold 12px Nunito, sans-serif';
+                const textWidth = ctx.measureText(this.sentence).width;
+                const boardWidth = textWidth + 20;
+
+                // Board background (Pastel Yellow / Blue)
+                ctx.fillStyle = this.type === 'LANGSUNG' ? '#E0F2FE' : '#FEF9C3';
+                ctx.strokeStyle = this.type === 'LANGSUNG' ? '#0284C7' : '#CA8A04';
+                ctx.lineWidth = 2;
+
+                const boardX = Math.max(10, Math.min(canvas.width - boardWidth - 10, this.x + 25 - boardWidth / 2));
+                const boardY = this.y - 30;
+
+                ctx.beginPath();
+                ctx.roundRect(boardX, boardY, boardWidth, 26, 8);
+                ctx.fill();
+                ctx.stroke();
+
+                // Sentence text
+                ctx.fillStyle = '#0F172A';
+                ctx.textAlign = 'center';
+                ctx.fillText(this.sentence, boardX + boardWidth / 2, boardY + 17);
+
+                ctx.restore();
+            }
+        }
+
+        class Projectile {
+            constructor(startX, startY, targetX, targetY, type) {
+                this.x = startX;
+                this.y = startY;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.type = type;
+                this.speed = 9;
+
+                const dx = targetX - startX;
+                const dy = targetY - startY;
+                const dist = Math.hypot(dx, dy);
+                this.vx = (dx / dist) * this.speed;
+                this.vy = (dy / dist) * this.speed;
+                this.active = true;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Create trail particles
+                if (Math.random() < 0.6) {
+                    particles.push(new Particle(this.x, this.y, this.type === 'LANGSUNG' ? '#38BDF8' : '#FACC15'));
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 10, 0, Math.PI * 2);
+                ctx.fillStyle = this.type === 'LANGSUNG' ? '#0284C7' : '#EAB308';
+                ctx.fill();
+                ctx.strokeStyle = '#FFFFFF';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.radius = Math.random() * 4 + 2;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+                this.alpha = 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha -= 0.04;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.alpha);
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Draw Defender Plants on Garden Defense Line
+        function drawPlants() {
+            // Defense line x = 80
+            ctx.save();
+            ctx.fillStyle = 'rgba(167, 243, 208, 0.4)';
+            ctx.fillRect(0, 0, 80, canvas.height);
+
+            // Sunflower / Peashooter visuals along left
+            for (let y = 60; y < canvas.height - 40; y += 90) {
+                // Plant pot base
+                ctx.fillStyle = '#F59E0B';
+                ctx.beginPath();
+                ctx.arc(50, y + 20, 15, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Plant Head (Cute Sunflower/Peashooter hybrid)
+                ctx.fillStyle = '#10B981';
+                ctx.beginPath();
+                ctx.arc(50, y, 18, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Face
+                ctx.fillStyle = '#FEF08A';
+                ctx.beginPath();
+                ctx.arc(50, y, 12, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
+        }
+
+        function startGame() {
+            playSynthSound('click');
+            gameRunning = true;
+            gamePaused = false;
+            gameScore = 0;
+            gameLives = 3;
+            zombies = [];
+            projectiles = [];
+            particles = [];
+            spawnTimer = 0;
+
+            document.getElementById('game-start-overlay').classList.add('hidden');
+            document.getElementById('game-over-overlay').classList.add('hidden');
+            updateLivesDisplay();
+            document.getElementById('game-score-display').innerText = '0';
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        function toggleGamePause() {
+            if (!gameRunning) return;
+            gamePaused = !gamePaused;
+            const btn = document.getElementById('btn-game-pause');
+            btn.innerHTML = gamePaused ? '<i class="fa-solid fa-play"></i> Lanjut' : '<i class="fa-solid fa-pause"></i> Pause';
+            if (!gamePaused) requestAnimationFrame(gameLoop);
+        }
+
+        function triggerWeapon(weaponType) {
+            if (!gameRunning || gamePaused) return;
+
+            // Find closest zombie to the garden line (smallest X)
+            let closestZombie = null;
+            let minX = Infinity;
+
+            zombies.forEach(z => {
+                if (z.x < minX) {
+                    minX = z.x;
+                    closestZombie = z;
+                }
+            });
+
+            if (closestZombie) {
+                playSynthSound('shoot');
+                // Shoot projectile from plants (x=50, y=zombie.y)
+                projectiles.push(new Projectile(50, closestZombie.y + 20, closestZombie.x + 25, closestZombie.y + 20, weaponType));
+            }
+        }
+
+        function updateLivesDisplay() {
+            const container = document.getElementById('game-lives-display');
+            container.innerHTML = '';
+            for (let i = 0; i < 3; i++) {
+                if (i < gameLives) {
+                    container.innerHTML += '<i class="fa-solid fa-heart text-rose-500"></i>';
+                } else {
+                    container.innerHTML += '<i class="fa-regular fa-heart text-slate-300"></i>';
+                }
+            }
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            playSynthSound('wrong');
+            document.getElementById('game-final-score').innerText = gameScore;
+            document.getElementById('game-over-overlay').classList.remove('hidden');
+        }
+
+        // Main Loop
+        function gameLoop() {
+            if (!gameRunning || gamePaused) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Background Grass
+            ctx.fillStyle = '#065F46'; // Garden Dark Green
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grass stripes
+            ctx.fillStyle = '#047857';
+            for (let i = 0; i < canvas.height; i += 60) {
+                ctx.fillRect(0, i, canvas.width, 30);
+            }
+
+            drawPlants();
+
+            // Spawn Zombies
+            spawnTimer++;
+            if (spawnTimer >= spawnInterval) {
+                spawnTimer = 0;
+                const randomSentence = gameSentencePool[Math.floor(Math.random() * gameSentencePool.length)];
+                zombies.push(new Zombie(randomSentence));
+                if (spawnInterval > 90) spawnInterval -= 2; // Gradually speed up spawns
+            }
+
+            // Update & Draw Zombies
+            for (let i = zombies.length - 1; i >= 0; i--) {
+                const z = zombies[i];
+                z.update();
+                z.draw();
+
+                // Check reach garden line
+                if (z.x <= 70) {
+                    zombies.splice(i, 1);
+                    gameLives--;
+                    updateLivesDisplay();
+                    playSynthSound('zombie-hit');
+                    if (gameLives <= 0) {
+                        gameOver();
+                        return;
+                    }
+                }
+            }
+
+            // Update & Draw Projectiles
+            for (let i = projectiles.length - 1; i >= 0; i--) {
+                const p = projectiles[i];
+                p.update();
+                p.draw();
+
+                // Check collision with target zombie
+                for (let j = zombies.length - 1; j >= 0; j--) {
+                    const z = zombies[j];
+                    const dist = Math.hypot(p.x - (z.x + 25), p.y - (z.y + 20));
+
+                    if (dist < 35) {
+                        // HIT! Check if weapon type matches zombie sentence type
+                        if (p.type === z.type) {
+                            // CORRECT HIT!
+                            playSynthSound('correct');
+                            gameScore += 20;
+                            document.getElementById('game-score-display').innerText = gameScore;
+
+                            // Burst Particles
+                            for (let k = 0; k < 12; k++) {
+                                particles.push(new Particle(z.x + 25, z.y + 20, p.type === 'LANGSUNG' ? '#38BDF8' : '#FACC15'));
+                            }
+
+                            zombies.splice(j, 1);
+                        } else {
+                            // WRONG WEAPON HIT!
+                            playSynthSound('wrong');
+                            // Zombie speeds up as penalty
+                            z.speed += 0.8;
+                        }
+
+                        projectiles.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+
+            // Update & Draw Particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const particle = particles[i];
+                particle.update();
+                particle.draw();
+                if (particle.alpha <= 0) particles.splice(i, 1);
+            }
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Allow direct canvas clicking on zombies to target them!
+        canvas.addEventListener('click', (e) => {
+            if (!gameRunning || gamePaused) return;
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            // Check if clicked near a zombie
+            zombies.forEach(z => {
+                if (Math.abs(clickX - (z.x + 25)) < 40 && Math.abs(clickY - (z.y + 20)) < 40) {
+                    // Trigger weapon default match for convenience on click
+                    triggerWeapon(z.type);
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
